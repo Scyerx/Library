@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>My Book Collection</header>
+    <div class="aside">
+        <div class="addInfo">
+            <div class="info">
+                <div class="infoTitle">Title</div>
+                <input class="infoInput" id="bookTitle">
+            </div>
+            <div class="info">
+                <div class="infoTitle">Author</div>
+                <input class="infoInput" id="bookAuthor">
+            </div>
+            <div class="info">
+                <div class="infoTitle" >Total pages</div>
+                <input class="infoInput" type="number" id="pagesNumb">
+            </div>
+            <div class="info">
+                <div class="infoTitle">Read book?</div>
+                <input type="checkbox" id="isRead">
+            </div>
+            <button id="addInfoBtn">Add Book</button>
+        </div>
+        <div class="infoTotal">
+            <div class="infos">
+                <div id="totalBooks">Total books: 0</div>
+                <div id="totalPages">Total pages: 0</div>
+                <div id="booksRead">Books read: 0</div>
+            </div>
+            
+        </div>
+    </div>
+    <div id="collection">
+        <div class="content" status="true">
+            <div class="name">Title: Harry potter</div>
+            <div class="author">Author: J.K. Rowlings</div>
+            <div class="pages">Pages: 386</div>
+            <div class="read">Already read</div>
+            <button class="changeStatus">Change Status</button>
+            <button class="deleteBtn">Delete Book</button>
+            
+        </div>
+        <div class="content" status="false">
+            <div class="name">Title: The Fellowship of the Ring</div>
+            <div class="author">Author: J. R. R. Tolkien</div>
+            <div class="pages">Pages: 423</div>
+            <div class="read">Not read</div>
+            <button class="changeStatus">Change Status</button>
+            <button class="deleteBtn">Delete Book</button>
+        </div>
+        <div class="content" status="true">
+            <div class="name">Title: A game of Thrones</div>
+            <div class="author">Author: George R. R. Martin</div>
+            <div class="pages">Pages: 386</div>
+            <div class="read">Already read</div>
+            <button class="changeStatus">Change Status</button>
+            <button class="deleteBtn">Delete Book</button>
+        </div>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
