@@ -10,32 +10,17 @@ let myLibrary = [];
 
 addInfoBtn.onclick = function () {
     addBookToLibrary();  
-      
-    displayCollection();
+    clearCollection();
+    render ();
+    displayBooks();    
     clearForm();   
 }
 
-for (var i=0; i<changeStatus.length; i++) {
-    changeStatus[i].onclick = function () {
-        const readStatus = this.parentElement.getAttribute('status');
-        if (readStatus === "true") {
-            this.parentElement.setAttribute ("status", false);
-            this.previousElementSibling.textContent = "Not Read";
-        } else {
-            this.parentElement.setAttribute ("status", true);
-            this.previousElementSibling.textContent = "Already Read"
-            
-        }        
+function render() {
+    for (var i = 0; i < myLibrary.length; i++) {
+        myLibrary[i].index = i;
     }
 }
-
-for (var i=0; i<deleteBtn.length; i++) {
-    deleteBtn[i].onclick = function () {
-        this.parentElement.remove();
-    }
-}
-
-
 
 function Book(title, author, pages, read) {
     this.title=title
@@ -60,66 +45,85 @@ function clearForm(){
     isRead.checked=false
 }
 
-
-
-function displayCollection () {
-    const book=document.createElement('div');
-    book.setAttribute('class', 'content');
-
-    const title = document.createElement('div');
-    title.setAttribute('class', 'name');
-    title.textContent=`Title: ${bookTitle.value}`
-    book.appendChild(title);
-
-    const author = document.createElement('div');
-    author.setAttribute('class', 'author');
-    author.textContent=`Author: ${bookAuthor.value}`
-    book.appendChild(author);
-
-    const pages = document.createElement('div');
-    pages.setAttribute('class', 'pages');
-    pages.textContent=`Pages: ${pagesNumb.value}`
-    book.appendChild(pages);
-
-    if (isRead.checked == true) {
-        const isitread = document.createElement('div');
-        isitread.setAttribute('class', 'read');
-        isitread.textContent=`Already read`
-        book.appendChild(isitread);
-        book.setAttribute('status', true)
-    } else {
-        const isitread = document.createElement('div');
-        isitread.setAttribute('class', 'read');
-        isitread.textContent=`Not read`
-        book.appendChild(isitread);
-        book.setAttribute('status', false)
+function clearCollection () {
+    while (collection.firstChild) {
+        collection.firstChild.remove();
     }
+}
 
-    const changeButton = document.createElement('button');
-    changeButton.setAttribute('class', 'changeStatus')
-    changeButton.textContent="Change Button";
-    changeButton.addEventListener('click', function () {
-        const readStatus = this.parentElement.getAttribute('status');
-        if (readStatus === "true") {
-            this.parentElement.setAttribute ("status", false);
-            this.previousElementSibling.textContent = "Not Read";
-        } else {
-            this.parentElement.setAttribute ("status", true);
-            this.previousElementSibling.textContent = "Already Read"
-            
-        }         
-    })
-    book.appendChild(changeButton);
+function statusChange () {
+    const readStatus = this.parentElement.getAttribute('status');
+    const bookIndex = this.parentElement.getAttribute('index');
+    if (readStatus === "true") {
+    this.parentElement.setAttribute ("status", false);
+    this.previousElementSibling.textContent = "Not Read";
+    myLibrary[bookIndex].read = false;
+    } else {
+    this.parentElement.setAttribute ("status", true);
+    this.previousElementSibling.textContent = "Already Read" 
+    myLibrary[bookIndex].read = true; 
+    } 
+}
 
-    const deleteButton = document.createElement('button');
-    deleteButton.setAttribute('class', 'deleteBtn')
-    deleteButton.textContent="Delete Button";
-    deleteButton.addEventListener('click', function() {
-        this.parentElement.remove();
-    })
-    book.appendChild(deleteButton)
-
+function deleteBook () {
+    const bookIndex = this.parentElement.getAttribute('index')
+    myLibrary.splice(bookIndex, 1) ;
+    clearCollection();
+    render ();
+    displayBooks();
     
 
-    collection.appendChild(book);
 }
+
+function displayBooks () {
+    for (var i = 0; i<myLibrary.length; i++) {
+        
+        const book=document.createElement('div');
+        book.setAttribute('class', 'content');
+        book.setAttribute('index', myLibrary[i].index);
+
+        const title = document.createElement('div');
+        title.setAttribute('class', 'name');
+        title.textContent=`Title: ${myLibrary[i].title}`
+        book.appendChild(title);
+
+        const author = document.createElement('div');
+        author.setAttribute('class', 'author');
+        author.textContent=`Author: ${myLibrary[i].author}`
+        book.appendChild(author);
+
+        const pages = document.createElement('div');
+        pages.setAttribute('class', 'pages');
+        pages.textContent=`Pages: ${myLibrary[i].pages}`
+        book.appendChild(pages);
+
+        if (myLibrary[i].read === true) {
+            const isitread = document.createElement('div');
+            isitread.setAttribute('class', 'read');
+            isitread.textContent=`Already read`
+            book.appendChild(isitread);
+            book.setAttribute('status', true)
+        } else {
+            const isitread = document.createElement('div');
+            isitread.setAttribute('class', 'read');
+            isitread.textContent=`Not read`
+            book.appendChild(isitread);
+            book.setAttribute('status', false)
+        }
+    
+        const changeButton = document.createElement('button');
+        changeButton.setAttribute('class', 'changeStatus')
+        changeButton.textContent="Change Button";
+        changeButton.addEventListener('click', statusChange)
+        book.appendChild(changeButton);
+    
+        const deleteButton = document.createElement('button');
+        deleteButton.setAttribute('class', 'deleteBtn')
+        deleteButton.textContent="Delete Button";
+        deleteButton.addEventListener('click', deleteBook)
+        book.appendChild(deleteButton)  
+        collection.appendChild(book);
+    }
+
+}
+
