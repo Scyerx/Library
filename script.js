@@ -1,11 +1,19 @@
-const addInfoBtn = document.getElementById("addInfoBtn");
+const closeBtn = document.getElementById("closeBtn");
+const closeBtnEdit = document.getElementById("closeBtnEdit");
 const bookTitle = document.getElementById("bookTitle");
 const bookAuthor = document.getElementById("bookAuthor");
 const pagesNumb = document.getElementById("pagesNumb")
-const collection = document.getElementById("collection");
 const isRead = document.getElementById("isRead");
+const editInfoBtn =document.getElementById("editInfoBtn");
+const bookTitleEdit = document.getElementById("bookTitleEdit");
+const bookAuthorEdit = document.getElementById("bookAuthorEdit")
+const pagesNumbEdit = document.getElementById("pagesNumbEdit")
+const isReadEdit = document.getElementById("isReadEdit");
+const addBook = document.getElementById("addBook");
+
+
+const collection = document.getElementById("collection");
 const changeStatus=document.getElementsByClassName("changeStatus");
-const deleteBtn=document.getElementsByClassName("deleteBtn")
 let myLibrary = [];
 
 addInfoBtn.onclick = function () {
@@ -14,7 +22,46 @@ addInfoBtn.onclick = function () {
     render ();
     displayBooks();    
     clearForm();   
+    document.getElementById("popup").style.display = "none";
 }
+
+addBook.addEventListener("click", function () {
+    document.getElementById("popup").style.display = "flex";
+})
+
+closeBtn.addEventListener("click", function() {
+    document.getElementById("popup").style.display = "none";    
+})
+
+closeBtnEdit.addEventListener("click", function() {
+    document.getElementById("popupEdit").style.display = "none";    
+})
+
+function openEdit () {
+    document.getElementById("popupEdit").style.display = "flex";
+    const bookIndex = this.parentElement.parentElement.getAttribute('index')
+    bookTitleEdit.value = myLibrary[bookIndex].title
+    bookAuthorEdit.value = myLibrary[bookIndex].author
+    pagesNumbEdit.value = myLibrary[bookIndex].pages
+    document.getElementById("popupEdit").setAttribute('index', bookIndex)    
+}
+
+editInfoBtn.addEventListener("click", function () {
+    const bookIndex = this.parentElement.parentElement.getAttribute('index')
+    if (bookTitleEdit.value !=='') {
+        myLibrary[bookIndex].title = bookTitleEdit.value
+    }
+    if (bookAuthorEdit.value !=='') {
+        myLibrary[bookIndex].author = bookAuthorEdit.value
+    }
+    if (pagesNumbEdit.value !=='') {
+        myLibrary[bookIndex].pages = pagesNumbEdit.value
+    }  
+    clearCollection();
+    render ();
+    displayBooks();
+    document.getElementById("popupEdit").style.display = "none";
+})
 
 function render() {
     for (var i = 0; i < myLibrary.length; i++) {
@@ -66,13 +113,11 @@ function statusChange () {
 }
 
 function deleteBook () {
-    const bookIndex = this.parentElement.getAttribute('index')
+    const bookIndex = this.parentElement.parentElement.getAttribute('index')
     myLibrary.splice(bookIndex, 1) ;
     clearCollection();
     render ();
     displayBooks();
-    
-
 }
 
 function displayBooks () {
@@ -110,20 +155,52 @@ function displayBooks () {
             book.appendChild(isitread);
             book.setAttribute('status', false)
         }
-    
+
+
         const changeButton = document.createElement('button');
-        changeButton.setAttribute('class', 'changeStatus')
-        changeButton.textContent="Change Button";
-        changeButton.addEventListener('click', statusChange)
+        changeButton.setAttribute('class', 'changeStatus');
+        changeButton.textContent="Change Status";
+        changeButton.addEventListener('click', statusChange);
         book.appendChild(changeButton);
+
+        const editDelete = document.createElement('div');
+        editDelete.setAttribute('class', 'editDelete');
+
+        const editButtonDiv = document.createElement('div');
+        editButtonDiv.setAttribute('class', 'editButtonDiv');
+        const editButton = document.createElement('img');
+        editButton.setAttribute("src", "images/pencil.png");
+        editButton.setAttribute('class', 'editButton');
+        editButtonDiv.addEventListener('click', openEdit)
+        editButtonDiv.appendChild(editButton);
+        editDelete.appendChild(editButtonDiv);
     
-        const deleteButton = document.createElement('button');
-        deleteButton.setAttribute('class', 'deleteBtn')
-        deleteButton.textContent="Delete Button";
-        deleteButton.addEventListener('click', deleteBook)
-        book.appendChild(deleteButton)  
+        
+    
+        const deleteButtonDiv = document.createElement('div');
+        deleteButtonDiv.setAttribute('class', 'deleteButtonDiv');
+        const deleteButton = document.createElement('img');
+        deleteButton.setAttribute('src', 'images/delete-outline.png')
+        deleteButton.setAttribute('class', 'deleteBtn');
+        deleteButtonDiv.addEventListener('click', deleteBook);
+        deleteButtonDiv.appendChild(deleteButton);
+        editDelete.appendChild(deleteButtonDiv);
+
+        book.appendChild(editDelete);
         collection.appendChild(book);
     }
+
+    const addNewBook = document.createElement('div')
+    addNewBook.setAttribute('class', 'content');
+    addNewBook.setAttribute('id', 'addBook');
+    addNewBook.addEventListener("click", function () {
+        document.getElementById("popup").style.display = "flex";
+    })
+    const addImage = document.createElement('img');
+    addImage.setAttribute('src', 'images/plus.png');
+    addNewBook.appendChild(addImage);
+    collection.appendChild(addNewBook);
+
 
 }
 

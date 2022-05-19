@@ -8,19 +8,34 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>My Book Collection</header>
-    <div class="aside">
-        <div class="addInfo">
+    <header> 
+        <div id=header>My Book Collection</div>
+        
+    </header>
+    
+    <div id="collection">
+        <div class="content" id="addBook">
+            <img src="./images/plus.png">
+        </div>
+
+        
+    </div>
+
+    
+
+    <div id="popup">
+        <div class="popupContent">
+            <img src="./images/close-circle-outline.png"  alt="close" id="closeBtn">
             <div class="info">
-                <div class="infoTitle">Title</div>
+                <div class="infoTitle">Title:</div>
                 <input class="infoInput" id="bookTitle">
             </div>
             <div class="info">
-                <div class="infoTitle">Author</div>
+                <div class="infoTitle">Author:</div>
                 <input class="infoInput" id="bookAuthor">
             </div>
             <div class="info">
-                <div class="infoTitle" >Total pages</div>
+                <div class="infoTitle" >Total pages:</div>
                 <input class="infoInput" type="number" id="pagesNumb">
             </div>
             <div class="info">
@@ -29,18 +44,29 @@
             </div>
             <button id="addInfoBtn">Add Book</button>
         </div>
-        <div class="infoTotal">
-            <div class="infos">
-                <div id="totalBooks">Total books: 0</div>
-                <div id="totalPages">Total pages: 0</div>
-                <div id="booksRead">Books read: 0</div>
-            </div>
-            
-        </div>
     </div>
-    <div id="collection">       
-        
 
+    <div id="popupEdit">
+        <div class="popupContent">
+            <img src="./images/close-circle-outline.png"  alt="close" id="closeBtnEdit">
+            <div class="info">
+                <div class="infoTitle">Title:</div>
+                <input class="infoInput" id="bookTitleEdit">
+            </div>
+            <div class="info">
+                <div class="infoTitle">Author:</div>
+                <input class="infoInput" id="bookAuthorEdit">
+            </div>
+            <div class="info">
+                <div class="infoTitle" >Total pages:</div>
+                <input class="infoInput" type="number" id="pagesNumbEdit">
+            </div>
+            <div class="info">
+                <div class="infoTitle">Read book?</div>
+                <input type="checkbox" id="isReadEdit">
+            </div>
+            <button id="editInfoBtn">Edit Book</button>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
